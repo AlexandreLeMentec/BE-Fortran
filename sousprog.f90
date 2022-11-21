@@ -32,6 +32,7 @@ function heaviside (x)
 end function heaviside
 
 subroutine regular_mesh (phys,num,mesh)
+use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
@@ -45,6 +46,7 @@ subroutine regular_mesh (phys,num,mesh)
 end subroutine regular_mesh
 
 subroutine conc_init (phys,num,mesh,C)
+use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
@@ -57,6 +59,7 @@ subroutine conc_init (phys,num,mesh,C)
 end subroutine conc_init
 
 subroutine conc_calc_temp (phys,num,C1,C2)
+use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
@@ -72,6 +75,7 @@ subroutine conc_calc_temp (phys,num,C1,C2)
 end subroutine conc_calc_temp
 
 subroutine conc_calc(phys,num,C)
+use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
@@ -98,6 +102,7 @@ function func (j)
 end function func
 
 subroutine display(phys,num,mesh,C)
+use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num

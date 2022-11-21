@@ -6,8 +6,8 @@ implicit none
     real, dimension(:,:), allocatable:: C 
     real, dimension(:), allocatable:: mesh
     call read_data (phys,num)
-    allocate(C(phys%N,phys%Nt))
-    allocate(mesh(phys%N))
+    allocate(C(num%N,num%Nt))
+    allocate(mesh(num%N))
     call regular_mesh (phys,num,mesh)
     call conc_init (phys,num,mesh,C)
     call conc_calc (phys,num,mesh,C)
