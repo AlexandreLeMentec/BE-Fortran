@@ -22,12 +22,12 @@ end subroutine read_data
 
 function heaviside (x)
     implicit none
-    integer:: heaviside
+    real:: heaviside
     real, intent(in) :: x
     if (x < 0.) then
-        heaviside = 0
+        heaviside = 0.
     else
-        heaviside = 1
+        heaviside = 1.
     endif
 end function heaviside
 
@@ -52,9 +52,10 @@ use m_type
     type(num_type), intent(in) :: num
     real, dimension(num%N), intent(in) :: mesh
     real, dimension(num%N,num%Nt), intent(out) :: C
+    real:: heaviside
     integer :: i
     do i = 1, num%N
-        C(i,1) = phys%C0 *(heaviside(mesh(i) - phys%xd)-heaviside(mesh(i) - phys%xf))
+        C(i,1) = phys%C0 *(heaviside(mesh(i) - phys%xd) - heaviside(mesh(i) - phys%xf))
     enddo
 end subroutine conc_init
 
@@ -68,7 +69,7 @@ use m_type
     integer :: i
     real :: R,dx
     dx = phys%L / (num%N - 1)
-    R = phys%D * num%Dt / (dx**2)
+    R = phys%D * num%Dt / (dx*dx)
     do i = 2, num%N-1
         C2(i) = R*C1(i-1) + (1-2*R)*C1(i) + R*C1(i+1)
     enddo
@@ -84,12 +85,12 @@ use m_type
     real::func
     integer :: j
     do j = 2, num%Nt-1
-        C1 = C(:,j)
+        C1(:) = C(:,j)
         call conc_calc_temp(phys,num,C1,C2)
-        C(:,j+1) = C2
+        C(:,j+1) = C2(:)
     enddo
-    do j =  1, num%Nt
-        C(1,j) = func(j).
+    do j =  2, num%Nt
+        C(1,j) = func(j)
         C(num%N,j) = 0.
     enddo
 end subroutine conc_calc
