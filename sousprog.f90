@@ -35,7 +35,7 @@ subroutine regular_mesh (phys,num,mesh)
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
-    real, dimension(N), intent(out) :: mesh
+    real, dimension(num%N), intent(out) :: mesh
     integer :: i, j
     real :: dx
     dx = phys%L / (num%N - 1)
@@ -48,25 +48,65 @@ subroutine conc_init (phys,num,mesh,C)
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
-    real, dimension(N), intent(in) :: mesh
-    real, dimension(N,Nt), intent(out) :: C
+    real, dimension(num%N), intent(in) :: mesh
+    real, dimension(num%N,num%Nt), intent(out) :: C
     integer :: i
     do i = 1, num%N
         C(i,1) = phys%C0 *(heaviside(mesh(i) - phys%xd)-heaviside(mesh(i) - phys%xf))
     enddo
 end subroutine conc_init
 
-subroutine conc_calc (phys,num,C1,C2)
+subroutine conc_calc_temp (phys,num,C1,C2)
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
-    real, dimension(N), intent(in) :: C1
-    real, dimension(N), intent(out) :: C2
+    real, dimension(num%N), intent(in) :: C1
+    real, dimension(num%N), intent(out) :: C2
     integer :: i
     real :: R,dx
     dx = phys%L / (num%N - 1)
     R = phys%D * num%Dt / (dx**2)
-    do i = 2, num%N
+    do i = 2, num%N-1
         C2(i) = R*C1(i-1) + (1-2*R)*C1(i) + R*C1(i+1)
     enddo
+end subroutine conc_calc_temp
+
+subroutine conc_calc(phys,num,C)
+    implicit none
+    type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
+    real, dimension(num%N,num%Nt), intent(inout) :: C
+    real, dimension(num%N) :: C1, C2
+    real::func
+    integer :: j
+    do j = 2, num%Nt-1
+        C1 = C(:,j)
+        call conc_calc_temp(phys,num,C1,C2)
+        C(:,j+1) = C2
+    enddo
+    do j =  1, num%Nt
+        C(1,j) = func(j).
+        C(num%N,j) = 0.
+    enddo
 end subroutine conc_calc
+
+function func (j)
+    implicit none
+    real:: func
+    integer, intent(in) :: j
+    func = 0.
+end function func
+
+subroutine display(phys,num,mesh,C)
+    implicit none
+    type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
+    real, dimension(num%N), intent(in) :: mesh
+    real, dimension(num%N,num%Nt), intent(in) :: C
+    integer :: i, j
+    open (unit=10, file="resultat.dat")
+    do j = 1, num%Nt
+        write(10,*)(mesh(i), C(i,j), i = 1, num%N)
+    enddo
+    close (10)
+end subroutine display
