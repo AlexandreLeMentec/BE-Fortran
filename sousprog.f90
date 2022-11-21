@@ -41,7 +41,7 @@ use m_type
     real, dimension(num%N), intent(out) :: mesh
     integer :: i, j
     do i = 1, num%N
-        mesh(i) = phys%xd + (i - 1) * num%dx
+        mesh(i) = (i - 1) * num%dx
     enddo
 end subroutine regular_mesh
 
@@ -91,7 +91,5 @@ use m_type
     real, dimension(num%N), intent(in) :: mesh
     real, dimension(num%N), intent(in) :: C2
     integer :: i
-    open (unit=10, file="resultat.dat")
-    write(10,*) (mesh(i), C2(i), i=1, num%N)
-    close (10)
+    write(10,*) C2
 end subroutine display
