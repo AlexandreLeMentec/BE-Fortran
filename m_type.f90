@@ -5,6 +5,6 @@ module m_type
 
     type num_type
         integer::N, Nt
-        real::Dt
+        real::Dt,dx,R
     end type num_type
 end module m_type
