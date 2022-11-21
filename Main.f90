@@ -15,7 +15,7 @@ implicit none
     call display(phys,num,mesh,C1)
     open (unit=10, file="resultat.dat")
     do j=1,num%N
-        call conc_calc(phys,num,mesh,C1,C2)
+        call conc_calc(phys,num,mesh,C1,C2,j)
         call display(phys,num,mesh,C2)
         C1(:)=C2(:)
     enddo
