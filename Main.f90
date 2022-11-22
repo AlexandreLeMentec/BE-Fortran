@@ -14,11 +14,16 @@ implicit none
     call conc_init (phys,num,mesh,C1)
     call display(phys,num,mesh,C1)
     open (unit=10, file="resultat.dat")
-    do j=1,num%N
-        call conc_calc(phys,num,mesh,C1,C2,j)
-        call display(phys,num,mesh,C2)
-        C1(:)=C2(:)
-    enddo
+    call display(phys,num,mesh,C1)
+    write(*,*)C1
+    call conc_calc(phys,num,mesh,C1,C2,j)
+    write(*,*)C2
+    !do j=2,num%N
+        !call conc_calc(phys,num,mesh,C1,C2,j)
+        !write(*,*)C2
+        !call display(phys,num,mesh,C2)
+        !C1(:)=C2(:)
+    !enddo
     close (10)
     deallocate(C1)
     deallocate(C2)
