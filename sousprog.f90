@@ -65,15 +65,16 @@ use m_type
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
     real, dimension(num%N), intent(in) :: C1
-    real, dimension(num%N), intent(out) :: C2
+    real, dimension(num%N), intent(inout) :: C2
     integer, intent(in) :: j
     real::func
     integer :: i
     C2(1) = func(j)
-    do i = 2, num%N-1
-        C2(i) = num%R*C1(i-1) + (1-2*num%R)*C1(i) + num%R*C1(i+1)
-    enddo
     C2(num%N) = 0.
+    do i = 2, num%N-1
+        C2(i) = num%R*C1(i-1) + (1 - 2*num%R)*C1(i) + num%R*C1(i+1)
+    enddo
+    write(*,*) "C2=",C2
 end subroutine conc_calc
 
 function func (j)
