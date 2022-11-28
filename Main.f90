@@ -4,12 +4,13 @@ implicit none
     type(phys_type):: phys
     type(num_type):: num
     real, dimension(:), allocatable:: mesh
-    real, dimension(:), allocatable :: C1, C2
+    real, dimension(:), allocatable :: C1, C2, Cth
     integer::j
     call read_data (phys,num)
     allocate(mesh(num%N))
     allocate(C1(num%N))
     allocate(C2(num%N))
+    allocate(Cth(num%N))
     call regular_mesh (phys,num,mesh)
     call conc_init (phys,num,mesh,C1)
     call display(phys,num,mesh,C1)
