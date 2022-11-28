@@ -7,5 +7,5 @@
 
 ! donées numériques (num):
 100             ! N : nombre de pas d'espace (à choisir)
-10.             ! Dt : pas de temps (à choisir) 
-100             ! Nt : nb de pas de temps (à choisir)
+3.             ! Dt : pas de temps (à choisir) 
+1000            ! Nt : nb de pas de temps (à choisir)
