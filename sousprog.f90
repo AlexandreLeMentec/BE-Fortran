@@ -94,3 +94,17 @@ use m_type
     integer :: i
     write(10,*) C2
 end subroutine display
+
+subroutine Cphysique (phys,num,mesh,Cth,j)
+use m_type
+    implicit none
+    type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
+    real, dimension(num%N), intent(in) :: mesh
+    real, dimension(num%N), intent(inout) :: Cth
+    integer, intent(in) :: j
+    integer :: i
+    do i = 1, num%N
+        Cth(i) = phys%C0 * (1-erf(mesh(i)/2*sqrt(phys%D*j*num%Dt)))
+    enddo
+end subroutine Cphysique
