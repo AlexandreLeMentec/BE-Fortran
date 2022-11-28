@@ -108,3 +108,20 @@ use m_type
         Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*(j-2)*num%Dt)) ))
     enddo
 end subroutine Cphysique
+
+subroutine comparison (phys,num,C2,Cth)
+use m_type
+    implicit none
+    type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
+    real, dimension(num%N), intent(in) :: C2
+    real, dimension(num%N), intent(in) :: Cth
+    integer :: i
+    real :: erreur
+    erreur = 0.
+    do i = 1, num%N
+    
+    enddo
+    erreur = erreur / num%N
+    write(10,*) erreur
+end subroutine comparison
