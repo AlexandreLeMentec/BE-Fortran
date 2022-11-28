@@ -11,12 +11,11 @@ use m_type
     read(10,*) phys%C0
     read(10,*) phys%xd
     read(10,*) phys%xf
-    write(*,*) "donner le nombre de discrétisation spatial N"
-    read(*,*) num%N
-    write(*,*) "donner le pas du temps Dt"
-    read(*,*) num%Dt
-    write(*,*) "donner la discrétisation temporelle Nt"
-    read(*,*) num%Nt
+    read(10,*)
+    read(10,*)
+    read(10,*) num%N
+    read(10,*) num%Dt
+    read(10,*) num%Nt
     close (10)
     num%dx = phys%L / (num%N - 1)
     num%R = phys%D * num%Dt / (num%dx*num%dx)
@@ -74,7 +73,6 @@ use m_type
     do i = 2, num%N-1
         C2(i) = num%R*C1(i-1) + (1 - 2*num%R)*C1(i) + num%R*C1(i+1)
     enddo
-    write(*,*) "C2=",C2
 end subroutine conc_calc
 
 function func (j)
@@ -104,7 +102,21 @@ use m_type
     real, dimension(num%N), intent(inout) :: Cth
     integer, intent(in) :: j
     integer :: i
+    real :: erf
     do i = 1, num%N
-        Cth(i) = phys%C0 * (1-erf(mesh(i)/2*sqrt(phys%D*j*num%Dt)))
+        write(*,*) "mesh(i) = ", mesh(i), "j = ", j, "num%dt = ", num%Dt, "phys%D", phys%D
+        Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*j*num%Dt)) ))
+        write(*,*) mesh(i)/(2*sqrt(phys%D*j*num%Dt))
     enddo
+    write(*,*) "Cth=",Cth
 end subroutine Cphysique
+
+function concentration (x, t, D)
+    implicit none
+    real:: concentration
+    real, intent(in) :: x
+    real, intent(in) :: t
+    real, intent(in) :: D
+    real :: erf
+    concentration = 1 - erf(x/(2*sqrt(D*t)))
+end function concentration
