@@ -105,6 +105,6 @@ use m_type
     integer :: i
     real :: erf
     do i = 1, num%N
-        Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*(j-1)*num%Dt)) ))
+        Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*(j-2)*num%Dt)) ))
     enddo
 end subroutine Cphysique
