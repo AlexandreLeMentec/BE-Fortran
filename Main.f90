@@ -31,4 +31,5 @@ implicit none
     deallocate(C1)
     deallocate(C2)
     deallocate(mesh)
+    deallocate(Cth)
 end program pollution
