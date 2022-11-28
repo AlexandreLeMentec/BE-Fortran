@@ -68,26 +68,27 @@ use m_type
     integer, intent(in) :: j
     real::func
     integer :: i
-    C2(1) = func(j)
+    C2(1) = func(j, phys)
     C2(num%N) = 0.
     do i = 2, num%N-1
         C2(i) = num%R*C1(i-1) + (1 - 2*num%R)*C1(i) + num%R*C1(i+1)
     enddo
 end subroutine conc_calc
 
-function func (j)
+function func (j, phys)
+use m_type
     implicit none
+    type(phys_type), intent(in) :: phys
     real:: func
     integer, intent(in) :: j
-    func = 0.
+    func = phys%C0 
 end function func
 
-subroutine display(phys,num,mesh,C2)
+subroutine display(phys,num,C2)
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
     type(num_type), intent(in) :: num
-    real, dimension(num%N), intent(in) :: mesh
     real, dimension(num%N), intent(in) :: C2
     integer :: i
     write(10,*) C2
@@ -104,19 +105,6 @@ use m_type
     integer :: i
     real :: erf
     do i = 1, num%N
-        write(*,*) "mesh(i) = ", mesh(i), "j = ", j, "num%dt = ", num%Dt, "phys%D", phys%D
-        Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*j*num%Dt)) ))
-        write(*,*) mesh(i)/(2*sqrt(phys%D*j*num%Dt))
+        Cth(i) = phys%C0 * ( 1- erf(mesh(i)/(2*sqrt(phys%D*(j-1)*num%Dt)) ))
     enddo
-    write(*,*) "Cth=",Cth
 end subroutine Cphysique
-
-function concentration (x, t, D)
-    implicit none
-    real:: concentration
-    real, intent(in) :: x
-    real, intent(in) :: t
-    real, intent(in) :: D
-    real :: erf
-    concentration = 1 - erf(x/(2*sqrt(D*t)))
-end function concentration
