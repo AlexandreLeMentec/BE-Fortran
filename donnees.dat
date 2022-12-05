@@ -6,6 +6,6 @@
 0.            ! xf : position de fin de la zone de pollution (m)
 
 ! données numériques (num):
-100             ! N : nombre de pas d'espace (à choisir)
-0.1             ! Dt : pas de temps (à choisir) 
+8            ! N : nombre de pas d'espace (à choisir)
+10             ! Dt : pas de temps (à choisir) 
 3000            ! Nt : nb de pas de temps (à choisir)
