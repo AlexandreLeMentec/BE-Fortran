@@ -11,6 +11,9 @@ use m_type
     read(10,*) phys%C0
     read(10,*) phys%xd
     read(10,*) phys%xf
+    read(10,*) phys%A    
+    read(10,*) phys%B
+    read(10,*) phys%w
     read(10,*)
     read(10,*)
     read(10,*) num%N
@@ -68,20 +71,21 @@ use m_type
     integer, intent(in) :: j
     real::func
     integer :: i
-    C2(1) = func(j, phys)
+    C2(1) = func(j, phys, num)
     C2(num%N) = 0.
     do i = 2, num%N-1
         C2(i) = num%R*C1(i-1) + (1 - 2*num%R)*C1(i) + num%R*C1(i+1)
     enddo
 end subroutine conc_calc
 
-function func (j, phys)
+function func (j, phys, num)
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
     real:: func
     integer, intent(in) :: j
-    func = phys%C0 
+    func = phys%C0 * (phys%A + phys%B * sin(phys%w * j * num%Dt))
 end function func
 
 subroutine display(phys,num,C2)

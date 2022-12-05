@@ -1,6 +1,6 @@
 module m_type
     type phys_type
-        real::L, D, C0, xd, xf
+        real::L, D, C0, xd, xf, A, B, w
     end type phys_type
 
     type num_type
