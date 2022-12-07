@@ -1,13 +1,14 @@
 import numpy as np
 from affichage import affichage
 import os
+from tkinter import *
 
 class application:
     def __init__(self):
         self.affichage = affichage()
         self.var = [] # 0:L, 1:D, 2:C0, 3:xd, 4:xf, 5:N, 6:Dt, 7:Nt
         self.lines = [] # line storing vector
-        self.t
+        self.t = 0
         self.move = 0 # 0:test, 1:D, 2:N, 3:Dt, 4:Nt, 5:T, 6:t
   
     def run(self):
