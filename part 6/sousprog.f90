@@ -1,4 +1,4 @@
-subroutine read_data (phys,num)
+subroutine read_data (phys,num)                  ! Récupère les valeurs des données dans le fichier 'donnees.dat'
 use m_type
     implicit none
     type(num_type), intent(inout) :: num
@@ -24,7 +24,7 @@ use m_type
     num%R = phys%D * num%Dt / (num%dx*num%dx)
 end subroutine read_data
 
-function heaviside (x)
+function heaviside (x)                          ! Définition de la fonction de Heaviside
     implicit none
     real:: heaviside
     real, intent(in) :: x
@@ -35,7 +35,7 @@ function heaviside (x)
     endif
 end function heaviside
 
-subroutine regular_mesh (phys,num,mesh)
+subroutine regular_mesh (phys,num,mesh)        ! Détermination dans un vecteur des x pour lesquels on va déterminer C(x, t) 
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
@@ -47,7 +47,7 @@ use m_type
     enddo
 end subroutine regular_mesh
 
-subroutine conc_init (phys,num,mesh,C1)
+subroutine conc_init (phys,num,mesh,C1)        ! Calcul de la condition initiale C(x, 0)
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
@@ -61,7 +61,7 @@ use m_type
     enddo
 end subroutine conc_init
 
-subroutine conc_calc (phys,num,C1,C2,j)
+subroutine conc_calc (phys,num,C1,C2,j)       ! Calcul de la concentration C(x, t+dt) pour tout x en fonction de la concentration en C(x,t)
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
@@ -78,17 +78,16 @@ use m_type
     enddo
 end subroutine conc_calc
 
-function func (j, phys, num)
+function func (j, phys)                     ! Calcul de la condition à la limite C(0, t) pour tout t
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
-    type(num_type), intent(in) :: num
     real:: func
     integer, intent(in) :: j
-    func = phys%C0 * (phys%A + phys%B * sin(phys%w * j * num%Dt))
+    func = phys%C0 
 end function func
 
-subroutine display(phys,num,C2)
+subroutine display(phys,num,C2)             ! Affichage d'un vecteur en ligne dans le fichier 'resultat.dat' 
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
@@ -98,7 +97,7 @@ use m_type
     write(10,*) C2
 end subroutine display
 
-subroutine Cphysique (phys,num,mesh,Cth,j)
+subroutine Cphysique (phys,num,mesh,Cth,j) ! Calcul de la concentration C(x,t) à partir de la solution analytique en tout point x pour un t donné 
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
@@ -113,7 +112,7 @@ use m_type
     enddo
 end subroutine Cphysique
 
-subroutine comparison (phys,num,C2,Cth)
+subroutine comparison (phys,num,C2,Cth)  
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
