@@ -1,6 +1,7 @@
 program pollution
 use m_type
 implicit none 
+! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     type(phys_type):: phys
     type(num_type):: num
     real, dimension(:), allocatable:: mesh
@@ -19,7 +20,6 @@ implicit none
         call conc_calc(phys,num,C1,C2,j)
         call Cphysique(phys,num,mesh,Cth,j)
         call display(phys,num,C2)
-        call display(phys,num,Cth)
         C1(:)=C2(:)
     enddo
     close (10)

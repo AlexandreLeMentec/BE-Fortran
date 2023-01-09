@@ -1,0 +1,11 @@
+! données physiques (phys):
+1000.           ! L : longueur du domaine étudié selon x (m)
+1.              ! D : diffusivité massique de l'agent polluant (m^2/s)
+1.              ! C0 : Concentration initiale du polluant 
+0.              ! xd : position du début de la zone de pollution (m)
+0.              ! xf : position de fin de la zone de pollution (m)
+
+! données numériques (num):
+25             ! N : nombre de pas d'espace (à choisir)
+10             ! Dt : pas de temps (à choisir) 
+300            ! Nt : nb de pas de temps (à choisir)

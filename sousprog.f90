@@ -68,20 +68,21 @@ use m_type
     integer, intent(in) :: j
     real::func
     integer :: i
-    C2(1) = func(j, phys)
+    C2(1) = func(j, phys, num)
     C2(num%N) = 0.
     do i = 2, num%N-1
         C2(i) = num%R*C1(i-1) + (1 - 2*num%R)*C1(i) + num%R*C1(i+1)
     enddo
 end subroutine conc_calc
 
-function func (j, phys)
+function func (j, phys, num)
 use m_type
     implicit none
     type(phys_type), intent(in) :: phys
+    type(num_type), intent(in) :: num
     real:: func
     integer, intent(in) :: j
-    func = phys%C0 
+    func = phys%C0 ! entrer la fonction aux limites ici
 end function func
 
 subroutine display(phys,num,C2)
